@@ -13,37 +13,45 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #0a0a0a;
+            color: #ffffff;
             min-height: 100vh;
             padding: 20px;
+            position: relative;
         }
 
         .container {
             max-width: 900px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
             border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
             overflow: hidden;
+            border: 1px solid #333;
         }
 
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
             color: white;
             padding: 40px 30px;
             text-align: center;
+            border-bottom: 1px solid #333;
         }
 
         .header h1 {
             font-size: 2.5em;
             font-weight: 700;
             margin-bottom: 10px;
+            background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .header p {
             font-size: 1.1em;
-            opacity: 0.9;
+            opacity: 0.8;
+            color: #cccccc;
         }
 
         .form-container {
@@ -51,82 +59,58 @@
         }
 
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
 
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .form-row-3 {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 20px;
+            gap: 25px;
         }
 
         label {
             display: block;
             font-weight: 600;
-            color: #333;
+            color: #ffffff;
             margin-bottom: 8px;
             font-size: 0.95em;
         }
 
+        .optional {
+            color: #888;
+            font-weight: 400;
+            font-size: 0.85em;
+        }
+
         input, textarea, select {
             width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #e1e5e9;
-            border-radius: 10px;
+            padding: 15px 18px;
+            border: 2px solid #333;
+            border-radius: 12px;
             font-size: 16px;
             transition: all 0.3s ease;
-            background: #f8f9fa;
+            background: #1a1a1a;
+            color: #ffffff;
         }
 
         input:focus, textarea:focus, select:focus {
             outline: none;
-            border-color: #667eea;
-            background: white;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #ffffff;
+            background: #000000;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: #666;
         }
 
         textarea {
             resize: vertical;
             min-height: 120px;
+            font-family: inherit;
         }
 
-        /* Date Picker Styling */
-        .date-picker-container {
-            position: relative;
-        }
-
-        .date-input {
-            cursor: pointer;
-            background: #f8f9fa;
-            position: relative;
-        }
-
-        .date-input::before {
-            content: '📅';
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            pointer-events: none;
-        }
-
-        .date-range-display {
-            background: #e3f2fd;
-            border: 2px solid #2196f3;
-            border-radius: 10px;
-            padding: 12px 16px;
-            margin-top: 10px;
-            font-weight: 500;
-            color: #1976d2;
-        }
-
-        /* File Upload */
+        /* File Upload Styling */
         .file-upload {
             position: relative;
             display: inline-block;
@@ -146,42 +130,79 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
-            border: 2px dashed #667eea;
-            border-radius: 10px;
-            background: #f8f9fa;
-            color: #667eea;
+            padding: 30px;
+            border: 2px dashed #666;
+            border-radius: 12px;
+            background: #1a1a1a;
+            color: #cccccc;
             font-weight: 600;
             transition: all 0.3s ease;
+            min-height: 100px;
         }
 
         .file-upload:hover .file-upload-label {
-            background: #667eea;
-            color: white;
+            border-color: #ffffff;
+            background: #000000;
+            color: #ffffff;
         }
 
-        /* Time Slots */
+        .file-list {
+            margin-top: 15px;
+        }
+
+        .file-item {
+            background: #333;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin: 8px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #444;
+        }
+
+        .file-remove {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background 0.3s ease;
+        }
+
+        .file-remove:hover {
+            background: #cc0000;
+        }
+
+        /* Time Slots Styling */
         .time-slots-container {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            border: 2px solid #e1e5e9;
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 25px;
+            border: 2px solid #333;
         }
 
         .time-slot {
             display: flex;
             align-items: center;
             margin-bottom: 15px;
-            padding: 12px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 15px;
+            background: #000000;
+            border-radius: 10px;
+            border: 1px solid #333;
+        }
+
+        .time-slot:last-child {
+            margin-bottom: 0;
         }
 
         .time-slot label {
-            margin: 0 15px 0 0;
+            margin: 0 20px 0 0;
             font-weight: 500;
-            min-width: 60px;
+            min-width: 80px;
+            color: #cccccc;
         }
 
         .time-slot input {
@@ -189,49 +210,153 @@
             margin: 0;
         }
 
-        .posts-info {
-            background: #e8f5e8;
-            border: 2px solid #4caf50;
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 15px;
+        /* Campaign Summary */
+        .campaign-summary {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 25px;
+            border: 2px solid #333;
+        }
+
+        .campaign-summary h3 {
+            color: #ffffff;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .campaign-summary p {
+            color: #cccccc;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        /* Success Screen */
+        .success-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .success-content {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            padding: 50px;
+            border-radius: 20px;
             text-align: center;
-            font-weight: 500;
-            color: #2e7d32;
+            max-width: 500px;
+            border: 2px solid #333;
+            animation: slideUp 0.5s ease-out;
         }
 
-        /* Timezone Select */
-        .timezone-select {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-            background-position: right 12px center;
-            background-repeat: no-repeat;
-            background-size: 16px;
-            padding-right: 40px;
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .submit-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+        .success-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .success-content h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .success-content p {
+            color: #cccccc;
+            font-size: 1.1em;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        .close-btn {
+            background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%);
+            color: #000000;
             border: none;
-            padding: 16px 40px;
-            border-radius: 10px;
-            font-size: 18px;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
             font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%);
+            color: #000000;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
             cursor: pointer;
             width: 100%;
             transition: all 0.3s ease;
-            margin-top: 20px;
+            margin-top: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255, 255, 255, 0.2);
         }
 
         .submit-btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
             transform: none;
+        }
+
+        /* Timezone Settings */
+        .timezone-settings {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #333;
+            min-width: 200px;
+        }
+
+        .timezone-settings label {
+            font-size: 0.8em;
+            color: #888;
+            margin-bottom: 5px;
+        }
+
+        .timezone-settings select {
+            padding: 8px 12px;
+            font-size: 0.85em;
+        }
+
+        .help-text {
+            font-size: 0.85em;
+            color: #888;
+            margin-top: 8px;
+            line-height: 1.4;
         }
 
         .status-message {
@@ -243,64 +368,22 @@
         }
 
         .status-success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
+            background: rgba(76, 175, 80, 0.1);
+            color: #4caf50;
+            border: 1px solid #4caf50;
         }
 
         .status-error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+            background: rgba(244, 67, 54, 0.1);
+            color: #f44336;
+            border: 1px solid #f44336;
         }
 
-        .help-text {
-            font-size: 0.85em;
-            color: #666;
-            margin-top: 5px;
-        }
-
-        .file-list {
-            margin-top: 10px;
-        }
-
-        .file-item {
-            background: #e9ecef;
-            padding: 8px 12px;
-            border-radius: 6px;
-            margin: 5px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .file-remove {
-            background: #dc3545;
-            color: white;
-            border: none;
-            padding: 4px 8px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-        }
-
-        .campaign-summary {
-            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
-            border-radius: 15px;
-            padding: 20px;
-            margin-top: 20px;
-            border: 2px solid #2196f3;
-        }
-
-        .campaign-summary h3 {
-            color: #1976d2;
-            margin-bottom: 10px;
-        }
-
+        /* Mobile Responsive */
         @media (max-width: 768px) {
-            .form-row, .form-row-3 {
+            .form-row {
                 grid-template-columns: 1fr;
-                gap: 15px;
+                gap: 20px;
             }
 
             .header h1 {
@@ -317,7 +400,19 @@
             }
 
             .time-slot label {
-                margin-bottom: 5px;
+                margin-bottom: 8px;
+            }
+
+            .timezone-settings {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin-top: 20px;
+            }
+
+            .success-content {
+                margin: 20px;
+                padding: 30px;
             }
         }
     </style>
@@ -325,8 +420,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🚀 Social Media Scheduler</h1>
-            <p>Schedule your content with precision timing and AI optimization</p>
+            <h1>Social Media Scheduler</h1>
+            <p>Create and schedule your social media campaigns with AI assistance</p>
         </div>
         
         <div class="form-container">
@@ -334,100 +429,109 @@
             
             <form id="scheduleForm">
                 <div class="form-group">
-                    <label for="article">Article/Content *</label>
-                    <textarea id="article" name="article" required placeholder="Enter your main article content or key points that will be used to generate social media posts..."></textarea>
-                    <div class="help-text">This content will be used by AI to generate engaging social media posts</div>
+                    <label for="article">Content for AI Generation *</label>
+                    <textarea id="article" name="article" required placeholder="Enter your main content, key points, or topic that AI will use to generate engaging social media posts..."></textarea>
+                    <div class="help-text">This content will be used by AI to create unique, engaging posts for each scheduled time</div>
                 </div>
 
                 <div class="form-group">
-                    <label for="mediaFiles">Media Files</label>
+                    <label for="mediaFiles">Media Files (Photos/Videos)</label>
                     <div class="file-upload">
                         <input type="file" id="mediaFiles" name="mediaFiles" multiple accept="image/*,video/*">
                         <div class="file-upload-label">
-                            📁 Click to upload images/videos or drag & drop
+                            📁 Click to upload or drag & drop your media files
                         </div>
                     </div>
                     <div id="fileList" class="file-list"></div>
-                    <div class="help-text">Upload images or videos to accompany your posts (optional)</div>
+                    <div class="help-text">Upload images or videos that will accompany your posts. AI will distribute them across your scheduled posts.</div>
                 </div>
 
                 <div class="form-group">
-                    <label for="hashtags">Hashtags</label>
-                    <input type="text" id="hashtags" name="hashtags" placeholder="#socialmedia, #marketing, #content">
-                    <div class="help-text">Comma-separated hashtags (AI will suggest additional relevant ones)</div>
+                    <label for="hashtags">Hashtags <span class="optional">(Optional - AI will generate relevant hashtags)</span></label>
+                    <input type="text" id="hashtags" name="hashtags" placeholder="#yourhashtag, #marketing, #content">
+                    <div class="help-text">Add any specific hashtags you want to include. AI will add more relevant hashtags based on your content.</div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="startDate">Start Date *</label>
-                        <input type="date" id="startDate" name="startDate" class="date-input" required>
+                        <label for="startDate">Campaign Start Date *</label>
+                        <input type="date" id="startDate" name="startDate" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="endDate">End Date *</label>
-                        <input type="date" id="endDate" name="endDate" class="date-input" required>
-                    </div>
-                </div>
-
-                <div id="dateRangeDisplay" class="date-range-display" style="display: none;"></div>
-
-                <div class="form-row-3">
-                    <div class="form-group">
-                        <label for="postsPerDay">Posts Per Day *</label>
-                        <select id="postsPerDay" name="postsPerDay" required>
-                            <option value="1">1 post per day</option>
-                            <option value="2" selected>2 posts per day</option>
-                            <option value="3">3 posts per day</option>
-                            <option value="4">4 posts per day</option>
-                            <option value="5">5 posts per day</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="timezone">Timezone *</label>
-                        <select id="timezone" name="timezone" class="timezone-select" required>
-                            <option value="America/New_York">Eastern Time (ET)</option>
-                            <option value="America/Chicago">Central Time (CT)</option>
-                            <option value="America/Denver">Mountain Time (MT)</option>
-                            <option value="America/Los_Angeles">Pacific Time (PT)</option>
-                            <option value="Europe/London">London (GMT)</option>
-                            <option value="Europe/Paris">Paris (CET)</option>
-                            <option value="Europe/Berlin">Berlin (CET)</option>
-                            <option value="Asia/Tokyo">Tokyo (JST)</option>
-                            <option value="Asia/Shanghai">Shanghai (CST)</option>
-                            <option value="Asia/Kolkata">Mumbai (IST)</option>
-                            <option value="Australia/Sydney">Sydney (AEDT)</option>
-                            <option value="America/Sao_Paulo">São Paulo (BRT)</option>
-                            <option value="Africa/Cairo" selected>Cairo (EET)</option>
-                            <option value="UTC">UTC</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Current Time</label>
-                        <input type="text" id="currentTime" readonly style="background: #e9ecef;">
+                        <label for="endDate">Campaign End Date *</label>
+                        <input type="date" id="endDate" name="endDate" required>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Posting Times *</label>
+                    <label for="postsPerDay">Posts Per Day *</label>
+                    <select id="postsPerDay" name="postsPerDay" required>
+                        <option value="1">1 post per day</option>
+                        <option value="2" selected>2 posts per day</option>
+                        <option value="3">3 posts per day</option>
+                        <option value="4">4 posts per day</option>
+                        <option value="5">5 posts per day</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Schedule Times *</label>
                     <div class="time-slots-container">
                         <div id="timeSlots">
                             <!-- Time slots will be generated dynamically -->
                         </div>
-                        <div class="help-text">Specify when you want posts to be published each day in your selected timezone</div>
+                        <div class="help-text">Set the exact times when you want each post to be published daily</div>
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label for="additionalNotes">Additional Instructions <span class="optional">(Optional)</span></label>
+                    <textarea id="additionalNotes" name="additionalNotes" placeholder="Any specific instructions for AI (tone, style, target audience, call-to-action preferences, etc.)"></textarea>
+                    <div class="help-text">Provide any additional context or instructions to help AI create better posts for your campaign</div>
+                </div>
+
                 <div id="campaignSummary" class="campaign-summary" style="display: none;">
-                    <h3>📊 Campaign Summary</h3>
+                    <h3>📊 Campaign Overview</h3>
                     <div id="summaryContent"></div>
                 </div>
 
                 <button type="submit" class="submit-btn" id="submitBtn">
-                    🎯 Schedule Campaign
+                    🚀 Schedule Campaign
                 </button>
             </form>
+        </div>
+    </div>
+
+    <!-- Timezone Settings -->
+    <div class="timezone-settings">
+        <label for="timezone">Timezone Settings</label>
+        <select id="timezone" name="timezone">
+            <option value="Africa/Cairo" selected>Egypt (Cairo)</option>
+            <option value="Asia/Riyadh">Saudi Arabia (Riyadh)</option>
+            <option value="Asia/Dubai">UAE (Dubai)</option>
+            <option value="Asia/Kuwait">Kuwait</option>
+            <option value="Asia/Qatar">Qatar</option>
+            <option value="Asia/Bahrain">Bahrain</option>
+            <option value="Europe/Istanbul">Turkey (Istanbul)</option>
+            <option value="Asia/Baghdad">Iraq (Baghdad)</option>
+            <option value="Asia/Beirut">Lebanon (Beirut)</option>
+            <option value="Asia/Damascus">Syria (Damascus)</option>
+            <option value="Europe/London">UK (London)</option>
+            <option value="America/New_York">USA East (New York)</option>
+            <option value="America/Los_Angeles">USA West (Los Angeles)</option>
+            <option value="UTC">UTC</option>
+        </select>
+    </div>
+
+    <!-- Success Screen -->
+    <div id="successScreen" class="success-screen">
+        <div class="success-content">
+            <div class="success-icon">✅</div>
+            <h2>Campaign Scheduled!</h2>
+            <p>Your social media campaign has been successfully created and scheduled. AI will now generate engaging posts based on your content and distribute them according to your timeline.</p>
+            <div id="successDetails" style="margin: 20px 0; color: #888;"></div>
+            <button class="close-btn" onclick="closeSuccessScreen()">Close</button>
         </div>
     </div>
 
@@ -451,26 +555,8 @@
             document.getElementById('endDate').min = today;
             
             generateTimeSlots();
-            updateDateRange();
-            updateCurrentTime();
             updateCampaignSummary();
-            
-            // Update current time every minute
-            setInterval(updateCurrentTime, 60000);
         });
-
-        // Current time update
-        function updateCurrentTime() {
-            const timezone = document.getElementById('timezone').value;
-            const now = new Date();
-            const timeString = now.toLocaleTimeString('en-US', {
-                timeZone: timezone,
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: true
-            });
-            document.getElementById('currentTime').value = timeString;
-        }
 
         // Generate time slots based on posts per day
         function generateTimeSlots() {
@@ -479,10 +565,10 @@
             
             // Default times based on posts per day
             const defaultTimes = {
-                1: ['12:00'],
-                2: ['09:00', '15:00'],
-                3: ['09:00', '13:00', '17:00'],
-                4: ['08:00', '12:00', 16:00', '20:00'],
+                1: ['14:00'],
+                2: ['10:00', '16:00'],
+                3: ['09:00', '14:00', '19:00'],
+                4: ['08:00', '12:00', '16:00', '20:00'],
                 5: ['08:00', '11:00', '14:00', '17:00', '20:00']
             };
             
@@ -496,41 +582,6 @@
                     <input type="time" name="postTimeSchedule[]" value="${defaultTimes[postsPerDay][i]}" required>
                 `;
                 timeSlotsContainer.appendChild(timeSlot);
-            }
-            
-            updateCampaignSummary();
-        }
-
-        // Date range management
-        function updateDateRange() {
-            const startDate = document.getElementById('startDate').value;
-            const endDate = document.getElementById('endDate').value;
-            const display = document.getElementById('dateRangeDisplay');
-            
-            if (startDate && endDate) {
-                const start = new Date(startDate);
-                const end = new Date(endDate);
-                const diffTime = Math.abs(end - start);
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
-                
-                const startFormatted = start.toLocaleDateString('en-US', {
-                    weekday: 'long',
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                });
-                
-                const endFormatted = end.toLocaleDateString('en-US', {
-                    weekday: 'long',
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                });
-                
-                display.innerHTML = `📅 Campaign Duration: ${startFormatted} to ${endFormatted} (${diffDays} days)`;
-                display.style.display = 'block';
-            } else {
-                display.style.display = 'none';
             }
             
             updateCampaignSummary();
@@ -550,15 +601,15 @@
                 const totalDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
                 const totalPosts = totalDays * postsPerDay;
                 
-                const timezoneDisplay = timezone.replace('_', ' ').replace('/', ' - ');
+                const timezoneDisplay = timezone.split('/')[1].replace('_', ' ');
                 
                 const summary = document.getElementById('campaignSummary');
                 const content = document.getElementById('summaryContent');
                 
                 content.innerHTML = `
-                    <p><strong>📅 Duration:</strong> ${totalDays} days</p>
-                    <p><strong>📝 Posts per day:</strong> ${postsPerDay}</p>
-                    <p><strong>📊 Total posts:</strong> ${totalPosts}</p>
+                    <p><strong>📅 Duration:</strong> ${totalDays} days (${start.toDateString()} - ${end.toDateString()})</p>
+                    <p><strong>📝 Daily Posts:</strong> ${postsPerDay} posts</p>
+                    <p><strong>📊 Total Posts:</strong> ${totalPosts} posts</p>
                     <p><strong>🌍 Timezone:</strong> ${timezoneDisplay}</p>
                 `;
                 
@@ -570,12 +621,9 @@
 
         // Event listeners
         document.getElementById('postsPerDay').addEventListener('change', generateTimeSlots);
-        document.getElementById('startDate').addEventListener('change', updateDateRange);
-        document.getElementById('endDate').addEventListener('change', updateDateRange);
-        document.getElementById('timezone').addEventListener('change', function() {
-            updateCurrentTime();
-            updateCampaignSummary();
-        });
+        document.getElementById('startDate').addEventListener('change', updateCampaignSummary);
+        document.getElementById('endDate').addEventListener('change', updateCampaignSummary);
+        document.getElementById('timezone').addEventListener('change', updateCampaignSummary);
 
         // File handling
         document.getElementById('mediaFiles').addEventListener('change', function(e) {
@@ -592,7 +640,7 @@
                 const fileItem = document.createElement('div');
                 fileItem.className = 'file-item';
                 fileItem.innerHTML = `
-                    <span>${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)</span>
+                    <span>📁 ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)</span>
                     <button type="button" class="file-remove" onclick="removeFile(${index})">Remove</button>
                 `;
                 fileList.appendChild(fileItem);
@@ -604,6 +652,24 @@
             updateFileList();
         }
 
+        // Success screen
+        function showSuccessScreen(campaignDetails) {
+            document.getElementById('successDetails').innerHTML = campaignDetails;
+            document.getElementById('successScreen').style.display = 'flex';
+        }
+
+        function closeSuccessScreen() {
+            document.getElementById('successScreen').style.display = 'none';
+            // Reset form
+            document.getElementById('scheduleForm').reset();
+            selectedFiles = [];
+            updateFileList();
+            // Reinitialize with defaults
+            setTimeout(() => {
+                location.reload();
+            }, 500);
+        }
+
         // Form submission
         document.getElementById('scheduleForm').addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -612,7 +678,7 @@
             const statusMessage = document.getElementById('statusMessage');
             
             submitBtn.disabled = true;
-            submitBtn.textContent = '⏳ Processing Campaign...';
+            submitBtn.textContent = '⏳ Creating Campaign...';
             
             try {
                 const formData = new FormData(this);
@@ -643,13 +709,14 @@
                 const payload = {
                     article: formData.get('article'),
                     mediaFiles: mediaFiles,
-                    hashtags: formData.get('hashtags'),
+                    hashtags: formData.get('hashtags') || '',
+                    additionalNotes: formData.get('additionalNotes') || '',
                     postTimeSchedule: timeInputs,
                     postsPerDay: parseInt(formData.get('postsPerDay')),
                     numberOfDays: numberOfDays,
                     startDate: formData.get('startDate'),
                     endDate: formData.get('endDate'),
-                    timezone: formData.get('timezone')
+                    timezone: document.getElementById('timezone').value
                 };
                 
                 console.log('Sending payload:', payload);
@@ -664,14 +731,14 @@
                 
                 if (response.ok) {
                     const totalPosts = numberOfDays * parseInt(formData.get('postsPerDay'));
-                    showStatus(`✅ Campaign scheduled successfully! ${totalPosts} posts will be published over ${numberOfDays} days.`, 'success');
-                    this.reset();
-                    selectedFiles = [];
-                    updateFileList();
-                    // Reset to defaults
-                    setTimeout(() => {
-                        location.reload();
-                    }, 3000);
+                    const campaignDetails = `
+                        <strong>📊 Campaign Details:</strong><br>
+                        • ${totalPosts} posts over ${numberOfDays} days<br>
+                        • ${mediaFiles.length} media files uploaded<br>
+                        • Timezone: ${document.getElementById('timezone').value.split('/')[1]}<br>
+                        • Starting: ${startDate.toDateString()}
+                    `;
+                    showSuccessScreen(campaignDetails);
                 } else {
                     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
@@ -681,7 +748,7 @@
                 showStatus(`❌ Error: ${error.message}`, 'error');
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.textContent = '🎯 Schedule Campaign';
+                submitBtn.textContent = '🚀 Schedule Campaign';
             }
         });
 
