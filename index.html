@@ -2,40 +2,125 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>n8n Workflow Test Form</title>
     <style>
-        body { font-family: sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
-        h1 { text-align: center; }
-        label, input, textarea, select { display: block; margin-bottom: 10px; width: 100%; box-sizing: border-box; }
-        textarea { height: 150px; }
-        input[type="submit"] { background-color: #4CAF50; color: white; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer; margin-top: 20px; }
-        input[type="submit"]:hover { background-color: #45a049; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            box-sizing: border-box;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.2s ease-in-out;
+        }
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        .submit-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+        .instructions {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #888;
+        }
     </style>
 </head>
 <body>
 
-    <h1>n8n Workflow Test Form</h1>
-    <form id="testForm">
-        <label for="article">Article Text:</label>
-        <textarea id="article" name="article" required>This is a sample article about our new product launch. It's exciting and we want to share it with the world!</textarea>
+    <div class="form-container">
+        <h1>n8n Workflow Test Form</h1>
+        <form id="testForm">
+            <div class="form-group">
+                <label for="article">Article Text</label>
+                <textarea id="article" name="article" placeholder="Enter the main article or content to be used for the posts." required>This is a sample article about our new product launch. It's exciting and we want to share it with the world!</textarea>
+            </div>
 
-        <label for="mediaFiles">Media Files (comma-separated URLs):</label>
-        <input type="text" id="mediaFiles" name="mediaFiles" value="https://example.com/image1.jpg,https://example.com/video2.mp4" required>
+            <div class="form-group">
+                <label for="mediaFiles">Media Files</label>
+                <input type="text" id="mediaFiles" name="mediaFiles" placeholder="Comma-separated URLs (e.g., https://example.com/img1.jpg, https://example.com/video2.mp4)" value="https://example.com/image1.jpg,https://example.com/video2.mp4" required>
+            </div>
 
-        <label for="hashtags">Hashtags (comma-separated text):</label>
-        <input type="text" id="hashtags" name="hashtags" value="n8n,automation,socialmedia" required>
+            <div class="form-group">
+                <label for="hashtags">Hashtags</label>
+                <input type="text" id="hashtags" name="hashtags" placeholder="Comma-separated tags (e.g., automation, socialmedia)" value="n8n,automation,socialmedia" required>
+            </div>
 
-        <label for="postTimeSchedule">Post Times (comma-separated, e.g., 09:00, 14:00):</label>
-        <input type="text" id="postTimeSchedule" name="postTimeSchedule" value="09:00,14:00" required>
+            <div class="form-group">
+                <label for="postTimeSchedule">Post Times</label>
+                <input type="text" id="postTimeSchedule" name="postTimeSchedule" placeholder="Comma-separated times (e.g., 09:00, 14:00)" value="09:00,14:00" required>
+            </div>
 
-        <label for="postsPerDay">Posts Per Day:</label>
-        <input type="number" id="postsPerDay" name="postsPerDay" value="2" required>
+            <div class="form-group">
+                <label for="postsPerDay">Posts Per Day</label>
+                <input type="number" id="postsPerDay" name="postsPerDay" placeholder="Number of posts per day" value="2" required>
+            </div>
 
-        <label for="numberOfDays">Number of Days:</label>
-        <input type="number" id="numberOfDays" name="numberOfDays" value="3" required>
+            <div class="form-group">
+                <label for="numberOfDays">Number of Days</label>
+                <input type="number" id="numberOfDays" name="numberOfDays" placeholder="Total number of days to schedule" value="3" required>
+            </div>
 
-        <input type="submit" value="Submit to n8n Webhook">
-    </form>
+            <button type="submit" class="submit-button">Submit to n8n Webhook</button>
+        </form>
+        <p class="instructions">Open your n8n workflow and click "Execute Workflow" to see the data appear.</p>
+    </div>
 
     <script>
         document.getElementById('testForm').addEventListener('submit', function(event) {
@@ -44,9 +129,9 @@
             const form = event.target;
             const formData = {
                 article: form.article.value,
-                mediaFiles: form.mediaFiles.value.split(','),
-                hashtags: form.hashtags.value,
-                postTimeSchedule: form.postTimeSchedule.value.split(','),
+                mediaFiles: form.mediaFiles.value.split(',').map(item => item.trim()),
+                hashtags: form.hashtags.value.trim(),
+                postTimeSchedule: form.postTimeSchedule.value.split(',').map(item => item.trim()),
                 postsPerDay: parseInt(form.postsPerDay.value),
                 numberOfDays: parseInt(form.numberOfDays.value)
             };
