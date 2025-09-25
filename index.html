@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>n8n Workflow Test Form</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+        h1 { text-align: center; }
+        label, input, textarea, select { display: block; margin-bottom: 10px; width: 100%; box-sizing: border-box; }
+        textarea { height: 150px; }
+        input[type="submit"] { background-color: #4CAF50; color: white; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer; margin-top: 20px; }
+        input[type="submit"]:hover { background-color: #45a049; }
+    </style>
+</head>
+<body>
+
+    <h1>n8n Workflow Test Form</h1>
+    <form id="testForm">
+        <label for="article">Article Text:</label>
+        <textarea id="article" name="article" required>This is a sample article about our new product launch. It's exciting and we want to share it with the world!</textarea>
+
+        <label for="mediaFiles">Media Files (comma-separated URLs):</label>
+        <input type="text" id="mediaFiles" name="mediaFiles" value="https://example.com/image1.jpg,https://example.com/video2.mp4" required>
+
+        <label for="hashtags">Hashtags (comma-separated text):</label>
+        <input type="text" id="hashtags" name="hashtags" value="n8n,automation,socialmedia" required>
+
+        <label for="postTimeSchedule">Post Times (comma-separated, e.g., 09:00, 14:00):</label>
+        <input type="text" id="postTimeSchedule" name="postTimeSchedule" value="09:00,14:00" required>
+
+        <label for="postsPerDay">Posts Per Day:</label>
+        <input type="number" id="postsPerDay" name="postsPerDay" value="2" required>
+
+        <label for="numberOfDays">Number of Days:</label>
+        <input type="number" id="numberOfDays" name="numberOfDays" value="3" required>
+
+        <input type="submit" value="Submit to n8n Webhook">
+    </form>
+
+    <script>
+        document.getElementById('testForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const formData = {
+                article: form.article.value,
+                mediaFiles: form.mediaFiles.value.split(','),
+                hashtags: form.hashtags.value,
+                postTimeSchedule: form.postTimeSchedule.value.split(','),
+                postsPerDay: parseInt(form.postsPerDay.value),
+                numberOfDays: parseInt(form.numberOfDays.value)
+            };
+
+            const webhookUrl = 'YOUR_N8N_WEBHOOK_URL';
+
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Data successfully sent to n8n!');
+                } else {
+                    alert('Error sending data to n8n. Check the webhook URL and your n8n workflow.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Check the console for details.');
+            });
+        });
+    </script>
+
+</body>
+</html>
