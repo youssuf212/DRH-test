@@ -19,7 +19,7 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -60,6 +60,12 @@
             gap: 20px;
         }
 
+        .form-row-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
         label {
             display: block;
             font-weight: 600;
@@ -90,6 +96,37 @@
             min-height: 120px;
         }
 
+        /* Date Picker Styling */
+        .date-picker-container {
+            position: relative;
+        }
+
+        .date-input {
+            cursor: pointer;
+            background: #f8f9fa;
+            position: relative;
+        }
+
+        .date-input::before {
+            content: '📅';
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        .date-range-display {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-top: 10px;
+            font-weight: 500;
+            color: #1976d2;
+        }
+
+        /* File Upload */
         .file-upload {
             position: relative;
             display: inline-block;
@@ -123,42 +160,53 @@
             color: white;
         }
 
-        .time-inputs {
+        /* Time Slots */
+        .time-slots-container {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border: 2px solid #e1e5e9;
+        }
+
+        .time-slot {
             display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .time-input {
+        .time-slot label {
+            margin: 0 15px 0 0;
+            font-weight: 500;
+            min-width: 60px;
+        }
+
+        .time-slot input {
             flex: 1;
-            min-width: 120px;
+            margin: 0;
         }
 
-        .add-time-btn {
-            background: #28a745;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            margin-top: 10px;
-            transition: background 0.3s ease;
+        .posts-info {
+            background: #e8f5e8;
+            border: 2px solid #4caf50;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            text-align: center;
+            font-weight: 500;
+            color: #2e7d32;
         }
 
-        .add-time-btn:hover {
-            background: #218838;
-        }
-
-        .remove-time-btn {
-            background: #dc3545;
-            color: white;
-            border: none;
-            padding: 4px 8px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-            margin-left: 10px;
+        /* Timezone Select */
+        .timezone-select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 12px center;
+            background-repeat: no-repeat;
+            background-size: 16px;
+            padding-right: 40px;
         }
 
         .submit-btn {
@@ -236,8 +284,21 @@
             font-size: 12px;
         }
 
+        .campaign-summary {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 2px solid #2196f3;
+        }
+
+        .campaign-summary h3 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+
         @media (max-width: 768px) {
-            .form-row {
+            .form-row, .form-row-3 {
                 grid-template-columns: 1fr;
                 gap: 15px;
             }
@@ -250,8 +311,13 @@
                 padding: 30px 20px;
             }
 
-            .time-inputs {
+            .time-slot {
                 flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .time-slot label {
+                margin-bottom: 5px;
             }
         }
     </style>
@@ -260,7 +326,7 @@
     <div class="container">
         <div class="header">
             <h1>🚀 Social Media Scheduler</h1>
-            <p>Schedule your content across multiple days with AI-powered optimization</p>
+            <p>Schedule your content with precision timing and AI optimization</p>
         </div>
         
         <div class="form-container">
@@ -291,19 +357,21 @@
                     <div class="help-text">Comma-separated hashtags (AI will suggest additional relevant ones)</div>
                 </div>
 
-                <div class="form-group">
-                    <label>Post Times *</label>
-                    <div id="timeInputs" class="time-inputs">
-                        <div class="time-input">
-                            <input type="time" name="postTimeSchedule[]" value="09:00" required>
-                            <button type="button" class="remove-time-btn" onclick="removeTimeInput(this)" style="display: none;">Remove</button>
-                        </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="startDate">Start Date *</label>
+                        <input type="date" id="startDate" name="startDate" class="date-input" required>
                     </div>
-                    <button type="button" class="add-time-btn" onclick="addTimeInput()">+ Add Time Slot</button>
-                    <div class="help-text">Specify the times you want posts to be published each day</div>
+
+                    <div class="form-group">
+                        <label for="endDate">End Date *</label>
+                        <input type="date" id="endDate" name="endDate" class="date-input" required>
+                    </div>
                 </div>
 
-                <div class="form-row">
+                <div id="dateRangeDisplay" class="date-range-display" style="display: none;"></div>
+
+                <div class="form-row-3">
                     <div class="form-group">
                         <label for="postsPerDay">Posts Per Day *</label>
                         <select id="postsPerDay" name="postsPerDay" required>
@@ -316,19 +384,48 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="numberOfDays">Number of Days *</label>
-                        <select id="numberOfDays" name="numberOfDays" required>
-                            <option value="1">1 day</option>
-                            <option value="3">3 days</option>
-                            <option value="7" selected>7 days</option>
-                            <option value="14">14 days</option>
-                            <option value="30">30 days</option>
+                        <label for="timezone">Timezone *</label>
+                        <select id="timezone" name="timezone" class="timezone-select" required>
+                            <option value="America/New_York">Eastern Time (ET)</option>
+                            <option value="America/Chicago">Central Time (CT)</option>
+                            <option value="America/Denver">Mountain Time (MT)</option>
+                            <option value="America/Los_Angeles">Pacific Time (PT)</option>
+                            <option value="Europe/London">London (GMT)</option>
+                            <option value="Europe/Paris">Paris (CET)</option>
+                            <option value="Europe/Berlin">Berlin (CET)</option>
+                            <option value="Asia/Tokyo">Tokyo (JST)</option>
+                            <option value="Asia/Shanghai">Shanghai (CST)</option>
+                            <option value="Asia/Kolkata">Mumbai (IST)</option>
+                            <option value="Australia/Sydney">Sydney (AEDT)</option>
+                            <option value="America/Sao_Paulo">São Paulo (BRT)</option>
+                            <option value="Africa/Cairo" selected>Cairo (EET)</option>
+                            <option value="UTC">UTC</option>
                         </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Current Time</label>
+                        <input type="text" id="currentTime" readonly style="background: #e9ecef;">
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label>Posting Times *</label>
+                    <div class="time-slots-container">
+                        <div id="timeSlots">
+                            <!-- Time slots will be generated dynamically -->
+                        </div>
+                        <div class="help-text">Specify when you want posts to be published each day in your selected timezone</div>
+                    </div>
+                </div>
+
+                <div id="campaignSummary" class="campaign-summary" style="display: none;">
+                    <h3>📊 Campaign Summary</h3>
+                    <div id="summaryContent"></div>
+                </div>
+
                 <button type="submit" class="submit-btn" id="submitBtn">
-                    🎯 Schedule Posts
+                    🎯 Schedule Campaign
                 </button>
             </form>
         </div>
@@ -337,6 +434,148 @@
     <script>
         let selectedFiles = [];
         const webhookUrl = 'https://primary-production-47599.up.railway.app/webhook-test/ff8e50c4-b870-49dc-ab6b-36b754365ab3';
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default start date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('startDate').value = today;
+            
+            // Set default end date to 7 days from now
+            const weekFromNow = new Date();
+            weekFromNow.setDate(weekFromNow.getDate() + 7);
+            document.getElementById('endDate').value = weekFromNow.toISOString().split('T')[0];
+            
+            // Set minimum date to today
+            document.getElementById('startDate').min = today;
+            document.getElementById('endDate').min = today;
+            
+            generateTimeSlots();
+            updateDateRange();
+            updateCurrentTime();
+            updateCampaignSummary();
+            
+            // Update current time every minute
+            setInterval(updateCurrentTime, 60000);
+        });
+
+        // Current time update
+        function updateCurrentTime() {
+            const timezone = document.getElementById('timezone').value;
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', {
+                timeZone: timezone,
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            });
+            document.getElementById('currentTime').value = timeString;
+        }
+
+        // Generate time slots based on posts per day
+        function generateTimeSlots() {
+            const postsPerDay = parseInt(document.getElementById('postsPerDay').value);
+            const timeSlotsContainer = document.getElementById('timeSlots');
+            
+            // Default times based on posts per day
+            const defaultTimes = {
+                1: ['12:00'],
+                2: ['09:00', '15:00'],
+                3: ['09:00', '13:00', '17:00'],
+                4: ['08:00', '12:00', 16:00', '20:00'],
+                5: ['08:00', '11:00', '14:00', '17:00', '20:00']
+            };
+            
+            timeSlotsContainer.innerHTML = '';
+            
+            for (let i = 0; i < postsPerDay; i++) {
+                const timeSlot = document.createElement('div');
+                timeSlot.className = 'time-slot';
+                timeSlot.innerHTML = `
+                    <label>Post ${i + 1}:</label>
+                    <input type="time" name="postTimeSchedule[]" value="${defaultTimes[postsPerDay][i]}" required>
+                `;
+                timeSlotsContainer.appendChild(timeSlot);
+            }
+            
+            updateCampaignSummary();
+        }
+
+        // Date range management
+        function updateDateRange() {
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            const display = document.getElementById('dateRangeDisplay');
+            
+            if (startDate && endDate) {
+                const start = new Date(startDate);
+                const end = new Date(endDate);
+                const diffTime = Math.abs(end - start);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+                
+                const startFormatted = start.toLocaleDateString('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                
+                const endFormatted = end.toLocaleDateString('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                
+                display.innerHTML = `📅 Campaign Duration: ${startFormatted} to ${endFormatted} (${diffDays} days)`;
+                display.style.display = 'block';
+            } else {
+                display.style.display = 'none';
+            }
+            
+            updateCampaignSummary();
+        }
+
+        // Campaign summary
+        function updateCampaignSummary() {
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            const postsPerDay = parseInt(document.getElementById('postsPerDay').value);
+            const timezone = document.getElementById('timezone').value;
+            
+            if (startDate && endDate) {
+                const start = new Date(startDate);
+                const end = new Date(endDate);
+                const diffTime = Math.abs(end - start);
+                const totalDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+                const totalPosts = totalDays * postsPerDay;
+                
+                const timezoneDisplay = timezone.replace('_', ' ').replace('/', ' - ');
+                
+                const summary = document.getElementById('campaignSummary');
+                const content = document.getElementById('summaryContent');
+                
+                content.innerHTML = `
+                    <p><strong>📅 Duration:</strong> ${totalDays} days</p>
+                    <p><strong>📝 Posts per day:</strong> ${postsPerDay}</p>
+                    <p><strong>📊 Total posts:</strong> ${totalPosts}</p>
+                    <p><strong>🌍 Timezone:</strong> ${timezoneDisplay}</p>
+                `;
+                
+                summary.style.display = 'block';
+            } else {
+                document.getElementById('campaignSummary').style.display = 'none';
+            }
+        }
+
+        // Event listeners
+        document.getElementById('postsPerDay').addEventListener('change', generateTimeSlots);
+        document.getElementById('startDate').addEventListener('change', updateDateRange);
+        document.getElementById('endDate').addEventListener('change', updateDateRange);
+        document.getElementById('timezone').addEventListener('change', function() {
+            updateCurrentTime();
+            updateCampaignSummary();
+        });
 
         // File handling
         document.getElementById('mediaFiles').addEventListener('change', function(e) {
@@ -365,36 +604,6 @@
             updateFileList();
         }
 
-        // Time input management
-        function addTimeInput() {
-            const timeInputs = document.getElementById('timeInputs');
-            const timeInput = document.createElement('div');
-            timeInput.className = 'time-input';
-            timeInput.innerHTML = `
-                <input type="time" name="postTimeSchedule[]" required>
-                <button type="button" class="remove-time-btn" onclick="removeTimeInput(this)">Remove</button>
-            `;
-            timeInputs.appendChild(timeInput);
-            updateRemoveButtons();
-        }
-
-        function removeTimeInput(button) {
-            button.parentElement.remove();
-            updateRemoveButtons();
-        }
-
-        function updateRemoveButtons() {
-            const timeInputs = document.querySelectorAll('.time-input');
-            timeInputs.forEach((input, index) => {
-                const removeBtn = input.querySelector('.remove-time-btn');
-                if (timeInputs.length > 1) {
-                    removeBtn.style.display = 'inline-block';
-                } else {
-                    removeBtn.style.display = 'none';
-                }
-            });
-        }
-
         // Form submission
         document.getElementById('scheduleForm').addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -403,7 +612,7 @@
             const statusMessage = document.getElementById('statusMessage');
             
             submitBtn.disabled = true;
-            submitBtn.textContent = '⏳ Processing...';
+            submitBtn.textContent = '⏳ Processing Campaign...';
             
             try {
                 const formData = new FormData(this);
@@ -413,7 +622,13 @@
                     .map(input => input.value)
                     .filter(time => time);
                 
-                // Convert files to base64 or prepare for upload
+                // Calculate number of days
+                const startDate = new Date(formData.get('startDate'));
+                const endDate = new Date(formData.get('endDate'));
+                const diffTime = Math.abs(endDate - startDate);
+                const numberOfDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+                
+                // Convert files to base64
                 const mediaFiles = [];
                 for (const file of selectedFiles) {
                     const base64 = await fileToBase64(file);
@@ -431,8 +646,13 @@
                     hashtags: formData.get('hashtags'),
                     postTimeSchedule: timeInputs,
                     postsPerDay: parseInt(formData.get('postsPerDay')),
-                    numberOfDays: parseInt(formData.get('numberOfDays'))
+                    numberOfDays: numberOfDays,
+                    startDate: formData.get('startDate'),
+                    endDate: formData.get('endDate'),
+                    timezone: formData.get('timezone')
                 };
+                
+                console.log('Sending payload:', payload);
                 
                 const response = await fetch(webhookUrl, {
                     method: 'POST',
@@ -443,10 +663,15 @@
                 });
                 
                 if (response.ok) {
-                    showStatus('✅ Workflow triggered successfully! Your posts are being processed.', 'success');
+                    const totalPosts = numberOfDays * parseInt(formData.get('postsPerDay'));
+                    showStatus(`✅ Campaign scheduled successfully! ${totalPosts} posts will be published over ${numberOfDays} days.`, 'success');
                     this.reset();
                     selectedFiles = [];
                     updateFileList();
+                    // Reset to defaults
+                    setTimeout(() => {
+                        location.reload();
+                    }, 3000);
                 } else {
                     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
@@ -456,7 +681,7 @@
                 showStatus(`❌ Error: ${error.message}`, 'error');
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.textContent = '🎯 Schedule Posts';
+                submitBtn.textContent = '🎯 Schedule Campaign';
             }
         });
 
@@ -477,11 +702,8 @@
             
             setTimeout(() => {
                 statusMessage.style.display = 'none';
-            }, 5000);
+            }, 8000);
         }
-
-        // Initialize
-        updateRemoveButtons();
     </script>
 </body>
 </html>
