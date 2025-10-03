@@ -110,20 +110,18 @@
             font-family: inherit;
         }
 
-        /* File Upload Styling */
         .file-upload {
             position: relative;
             display: inline-block;
-            cursor: pointer;
             width: 100%;
         }
 
-        .file-upload input[type=file] {
+        .file-upload input[type="file"] {
             position: absolute;
             opacity: 0;
+            cursor: pointer;
             width: 100%;
             height: 100%;
-            cursor: pointer;
         }
 
         .file-upload-label {
@@ -176,7 +174,6 @@
             background: #cc0000;
         }
 
-        /* Time Slots Styling */
         .time-slots-container {
             background: #1a1a1a;
             border-radius: 12px;
@@ -210,7 +207,6 @@
             margin: 0;
         }
 
-        /* Campaign Summary */
         .campaign-summary {
             background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
             border-radius: 15px;
@@ -231,7 +227,6 @@
             line-height: 1.5;
         }
 
-        /* Success Screen */
         .success-screen {
             display: none;
             position: fixed;
@@ -301,7 +296,6 @@
             box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
         }
 
-        /* Submit Button */
         .submit-btn {
             background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%);
             color: #000000;
@@ -329,7 +323,6 @@
             transform: none;
         }
 
-        /* Timezone Settings */
         .timezone-settings {
             position: fixed;
             bottom: 20px;
@@ -379,7 +372,6 @@
             border: 1px solid #f44336;
         }
 
-        /* Mobile Responsive */
         @media (max-width: 768px) {
             .form-row {
                 grid-template-columns: 1fr;
@@ -387,7 +379,7 @@
             }
 
             .header h1 {
-                font-size: 2em;
+                font-size: 1.8em;
             }
 
             .form-container {
@@ -423,10 +415,10 @@
             <h1>Social Media Scheduler</h1>
             <p>Create and schedule your social media campaigns with AI assistance</p>
         </div>
-        
+
         <div class="form-container">
             <div id="statusMessage" class="status-message"></div>
-            
+
             <form id="scheduleForm">
                 <div class="form-group">
                     <label for="article">Content for AI Generation *</label>
@@ -539,21 +531,22 @@
         let selectedFiles = [];
         const webhookUrl = 'https://primary-production-47599.up.railway.app/webhook-test/ff8e50c4-b870-49dc-ab6b-36b754365ab3';
 
-        // Initialize
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('statusMessage');
+            statusDiv.textContent = message;
+            statusDiv.className = `status-message status-${type}`;
+            statusDiv.style.display = 'block';
+            setTimeout(() => {
+                statusDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
-            // Set default start date to today
             const today = new Date().toISOString().split('T')[0];
-            document.getElementById('startDate').value = today;
-            
-            // Set default end date to 7 days from now
-            const weekFromNow = new Date();
-            weekFromNow.setDate(weekFromNow.getDate() + 7);
-            document.getElementById('endDate').value = weekFromNow.toISOString().split('T')[0];
-            
-            // Set minimum date to today
             document.getElementById('startDate').min = today;
             document.getElementById('endDate').min = today;
-            
+
             generateTimeSlots();
             updateCampaignSummary();
         });
@@ -562,7 +555,7 @@
         function generateTimeSlots() {
             const postsPerDay = parseInt(document.getElementById('postsPerDay').value);
             const timeSlotsContainer = document.getElementById('timeSlots');
-            
+
             // Default times based on posts per day
             const defaultTimes = {
                 1: ['14:00'],
@@ -571,19 +564,19 @@
                 4: ['08:00', '12:00', '16:00', '20:00'],
                 5: ['08:00', '11:00', '14:00', '17:00', '20:00']
             };
-            
+
             timeSlotsContainer.innerHTML = '';
-            
+
             for (let i = 0; i < postsPerDay; i++) {
-                const timeSlot = document.createElement('div');
-                timeSlot.className = 'time-slot';
-                timeSlot.innerHTML = `
-                    <label>Post ${i + 1}:</label>
-                    <input type="time" name="postTimeSchedule[]" value="${defaultTimes[postsPerDay][i]}" required>
+                const slot = document.createElement('div');
+                slot.className = 'time-slot';
+                slot.innerHTML = `
+                    <label for="time${i + 1}">Post ${i + 1}</label>
+                    <input type="time" id="time${i + 1}" name="time${i + 1}" value="${defaultTimes[postsPerDay][i]}" required>
                 `;
-                timeSlotsContainer.appendChild(timeSlot);
+                timeSlotsContainer.appendChild(slot);
             }
-            
+
             updateCampaignSummary();
         }
 
@@ -593,26 +586,26 @@
             const endDate = document.getElementById('endDate').value;
             const postsPerDay = parseInt(document.getElementById('postsPerDay').value);
             const timezone = document.getElementById('timezone').value;
-            
+
             if (startDate && endDate) {
                 const start = new Date(startDate);
                 const end = new Date(endDate);
                 const diffTime = Math.abs(end - start);
                 const totalDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
                 const totalPosts = totalDays * postsPerDay;
-                
+
                 const timezoneDisplay = timezone.split('/')[1].replace('_', ' ');
-                
+
                 const summary = document.getElementById('campaignSummary');
                 const content = document.getElementById('summaryContent');
-                
+
                 content.innerHTML = `
                     <p><strong>📅 Duration:</strong> ${totalDays} days (${start.toDateString()} - ${end.toDateString()})</p>
                     <p><strong>📝 Daily Posts:</strong> ${postsPerDay} posts</p>
                     <p><strong>📊 Total Posts:</strong> ${totalPosts} posts</p>
                     <p><strong>🌍 Timezone:</strong> ${timezoneDisplay}</p>
                 `;
-                
+
                 summary.style.display = 'block';
             } else {
                 document.getElementById('campaignSummary').style.display = 'none';
@@ -635,7 +628,7 @@
         function updateFileList() {
             const fileList = document.getElementById('fileList');
             fileList.innerHTML = '';
-            
+
             selectedFiles.forEach((file, index) => {
                 const fileItem = document.createElement('div');
                 fileItem.className = 'file-item';
@@ -652,7 +645,7 @@
             updateFileList();
         }
 
-        // Success screen
+        // Success screen functions
         function showSuccessScreen(campaignDetails) {
             document.getElementById('successDetails').innerHTML = campaignDetails;
             document.getElementById('successScreen').style.display = 'flex';
@@ -660,55 +653,88 @@
 
         function closeSuccessScreen() {
             document.getElementById('successScreen').style.display = 'none';
-            // Reset form
             document.getElementById('scheduleForm').reset();
             selectedFiles = [];
             updateFileList();
-            // Reinitialize with defaults
             setTimeout(() => {
                 location.reload();
             }, 500);
         }
 
+        // Upload files to Google Drive via n8n
+        async function uploadFilesToDrive(files) {
+            const uploadedFiles = [];
+            const uploadUrl = webhookUrl;
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('fileName', file.name);
+                formData.append('fileType', file.type);
+                formData.append('action', 'upload_file');
+
+                try {
+                    const response = await fetch(uploadUrl, {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (response.ok) {
+                        const result = await response.json();
+                        uploadedFiles.push({
+                            name: file.name,
+                            type: file.type,
+                            size: file.size,
+                            driveUrl: result.fileUrl || result.url,
+                            driveId: result.fileId || result.id
+                        });
+                    } else {
+                        throw new Error(`Failed to upload ${file.name}`);
+                    }
+                } catch (error) {
+                    console.error(`Error uploading ${file.name}:`, error);
+                    throw error;
+                }
+            }
+            return uploadedFiles;
+        }
+
         // Form submission
         document.getElementById('scheduleForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
+
             const submitBtn = document.getElementById('submitBtn');
             const statusMessage = document.getElementById('statusMessage');
-            
+
             submitBtn.disabled = true;
-            submitBtn.textContent = '⏳ Creating Campaign...';
-            
+            submitBtn.textContent = '⏳ Uploading Files...';
+
             try {
                 const formData = new FormData(this);
-                
-                // Get all time inputs
-                const timeInputs = Array.from(document.querySelectorAll('input[name="postTimeSchedule[]"]'))
-                    .map(input => input.value)
-                    .filter(time => time);
-                
-                // Calculate number of days
                 const startDate = new Date(formData.get('startDate'));
                 const endDate = new Date(formData.get('endDate'));
                 const diffTime = Math.abs(endDate - startDate);
                 const numberOfDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
-                
-                // Convert files to base64
-                const mediaFiles = [];
-                for (const file of selectedFiles) {
-                    const base64 = await fileToBase64(file);
-                    mediaFiles.push({
-                        name: file.name,
-                        type: file.type,
-                        size: file.size,
-                        data: base64
-                    });
+
+                // Get time inputs
+                const timeInputs = [];
+                document.querySelectorAll('.time-slot input').forEach(input => {
+                    timeInputs.push(input.value);
+                });
+
+                // Upload files to Google Drive first
+                let uploadedFiles = [];
+                if (selectedFiles.length > 0) {
+                    submitBtn.textContent = `⏳ Uploading ${selectedFiles.length} files...`;
+                    uploadedFiles = await uploadFilesToDrive(selectedFiles);
                 }
-                
+
+                // Now send campaign data with Google Drive URLs
+                submitBtn.textContent = '⏳ Creating Campaign...';
                 const payload = {
                     article: formData.get('article'),
-                    mediaFiles: mediaFiles,
+                    mediaFiles: uploadedFiles,
                     hashtags: formData.get('hashtags') || '',
                     additionalNotes: formData.get('additionalNotes') || '',
                     postTimeSchedule: timeInputs,
@@ -716,25 +742,26 @@
                     numberOfDays: numberOfDays,
                     startDate: formData.get('startDate'),
                     endDate: formData.get('endDate'),
-                    timezone: document.getElementById('timezone').value
+                    timezone: document.getElementById('timezone').value,
+                    action: 'schedule_campaign'
                 };
-                
+
                 console.log('Sending payload:', payload);
-                
+
                 const response = await fetch(webhookUrl, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(payload)
                 });
-                
+
                 if (response.ok) {
                     const totalPosts = numberOfDays * parseInt(formData.get('postsPerDay'));
                     const campaignDetails = `
                         <strong>📊 Campaign Details:</strong><br>
                         • ${totalPosts} posts over ${numberOfDays} days<br>
-                        • ${mediaFiles.length} media files uploaded<br>
+                        • ${uploadedFiles.length} media files uploaded to Google Drive<br>
                         • Timezone: ${document.getElementById('timezone').value.split('/')[1]}<br>
                         • Starting: ${startDate.toDateString()}
                     `;
@@ -742,35 +769,14 @@
                 } else {
                     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
-                
             } catch (error) {
-                console.error('Error:', error);
+                console.error('Submission error:', error);
                 showStatus(`❌ Error: ${error.message}`, 'error');
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.textContent = '🚀 Schedule Campaign';
             }
         });
-
-        function fileToBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = error => reject(error);
-            });
-        }
-
-        function showStatus(message, type) {
-            const statusMessage = document.getElementById('statusMessage');
-            statusMessage.textContent = message;
-            statusMessage.className = `status-message status-${type}`;
-            statusMessage.style.display = 'block';
-            
-            setTimeout(() => {
-                statusMessage.style.display = 'none';
-            }, 8000);
-        }
     </script>
 </body>
 </html>
